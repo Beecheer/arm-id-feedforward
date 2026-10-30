@@ -11,10 +11,10 @@ from unittest.mock import MagicMock, patch
 
 import numpy as np
 
-from ega_arm_host import arm_collect
-from ega_arm_host import arm_host
-from ega_arm_host.arm_analysis import analyze_capture, calibration_consistent
-from ega_arm_host.arm_workflow import Cancelled, Workflow, run_tool
+from arm_id_feedforward import arm_collect
+from arm_id_feedforward import arm_host
+from arm_id_feedforward.arm_analysis import analyze_capture, calibration_consistent
+from arm_id_feedforward.arm_workflow import Cancelled, Workflow, run_tool
 
 
 def write_capture(path, stage, pose_count=1, complete=True):
@@ -129,7 +129,7 @@ class WorkflowTests(unittest.TestCase):
                 args.handler(args)
 
     def run_stage(self, stage, answers):
-        with patch("ega_arm_host.arm_workflow.run_tool", side_effect=self.fake_tool), \
+        with patch("arm_id_feedforward.arm_workflow.run_tool", side_effect=self.fake_tool), \
              patch("builtins.input", side_effect=answers), \
              contextlib.redirect_stdout(io.StringIO()):
             return self.workflow.run_stage(stage)
@@ -147,7 +147,7 @@ class WorkflowTests(unittest.TestCase):
         self.assertTrue(self.run_stage('dynamic',['y','y','执行','y']))
         self.assertTrue(self.run_stage('validation',['y','y','执行','y']))
         calls=self.calls.copy()
-        with patch('ega_arm_host.arm_workflow.choose_port',side_effect=AssertionError('fit must not open serial')):
+        with patch('arm_id_feedforward.arm_workflow.choose_port',side_effect=AssertionError('fit must not open serial')):
             self.assertTrue(self.run_stage('identification',['y']))
         self.assertEqual(self.calls,calls)
         self.assertIn('identification',self.workflow.state['completed'])
@@ -208,7 +208,7 @@ class WorkflowTests(unittest.TestCase):
 
     def test_stage_zero_runs_without_serial_and_saved_plans_are_reused(self):
         self.workflow.port = None
-        with patch("ega_arm_host.arm_workflow.choose_port", side_effect=AssertionError("USB must remain unopened")):
+        with patch("arm_id_feedforward.arm_workflow.choose_port", side_effect=AssertionError("USB must remain unopened")):
             self.assertTrue(self.run_stage("preparation", ["y", "y"]))
         self.assertEqual(self.calls, [])
         self.workflow.port = "unused"
@@ -351,7 +351,7 @@ class WorkflowTests(unittest.TestCase):
 
     def test_quality_warning_does_not_reject_completed_stage(self):
         warning = {"passed": False, "issues": ["姿态稳定性提示"]}
-        with patch("ega_arm_host.arm_workflow.analyze_capture", return_value=warning):
+        with patch("arm_id_feedforward.arm_workflow.analyze_capture", return_value=warning):
             self.assertTrue(self.run_stage("static", ["y", "y", "执行", "y"]))
         self.assertEqual(self.workflow.state["attempts"]["static"]["phase"], "complete")
         self.assertIn("static", self.workflow.state["completed"])

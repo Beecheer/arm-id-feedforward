@@ -8,7 +8,7 @@ from unittest.mock import patch
 
 import numpy as np
 
-from ega_arm_host import identify_many
+from arm_id_feedforward import identify_many
 
 
 class FakeDynamics:

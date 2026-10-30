@@ -7,9 +7,9 @@ from unittest.mock import MagicMock, patch
 
 import numpy as np
 
-from ega_arm_host import arm_collect_more as more
-from ega_arm_host import arm_dynamics
-from ega_arm_host import arm_excitation
+from arm_id_feedforward import arm_collect_more as more
+from arm_id_feedforward import arm_dynamics
+from arm_id_feedforward import arm_excitation
 
 
 class SupplementalTests(unittest.TestCase):
@@ -35,7 +35,7 @@ class SupplementalTests(unittest.TestCase):
                 self.assertLess(abs(a).max(), arm_excitation.MAX_ACCELERATION)
                 np.testing.assert_allclose(v[[0,-1]], 0, atol=1e-12)
                 np.testing.assert_allclose(a[[0,-1]], 0, atol=1e-12)
-                with patch('ega_arm_host.arm_excitation.pin.updateGeometryPlacements'), patch('ega_arm_host.arm_excitation.pin.computeDistances'):
+                with patch('arm_id_feedforward.arm_excitation.pin.updateGeometryPlacements'), patch('arm_id_feedforward.arm_excitation.pin.computeDistances'):
                     screen.geometry_data.distanceResults = []
                     screen.geometry.collisionPairs = []
                     self.assertEqual(len(problem.constraints(problem.initial)), len(problem.get_constraint_bounds()[0]))

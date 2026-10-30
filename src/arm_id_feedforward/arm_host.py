@@ -40,7 +40,7 @@ COMMAND_SEQUENCE_MASK = 0xFFFFFFFF
 COMMAND_SEQUENCE_BLOCK = 1 << 20
 COMMAND_SEQUENCE_FILE = (
     Path(os.environ.get("XDG_STATE_HOME", Path.home() / ".local" / "state"))
-    / "ega-arm-host" / "command_sequence"
+    / "arm-id-host" / "command_sequence"
 )
 
 MODE_GRAVITY_DRAG = 0

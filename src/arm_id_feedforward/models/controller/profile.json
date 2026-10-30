@@ -1,5 +1,5 @@
 {
-  "kind": "ega_arm_host_profile",
+  "kind": "arm_id_feedforward_profile",
   "version": 1,
   "joint_count": 7,
   "motor_models": [

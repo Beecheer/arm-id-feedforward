@@ -1,6 +1,6 @@
 # 完整前馈实机验证
 
-模型：`src/ega_arm_host/models/identified/shared_full_model.json`，
+模型：`src/arm_id_feedforward/models/identified/shared_full_model.json`，
 SHA256 `38f4d071fb9bed91e84cf91390dce72ee844b79cb6af07385f416b71ab7c22c2`。
 下表为七轴位置误差合并 RMSE；完整记录未包含在本仓库；此处为历史实机结果摘要。
 
@@ -25,7 +25,7 @@ SHA256 `38f4d071fb9bed91e84cf91390dce72ee844b79cb6af07385f416b71ab7c22c2`。
 仅重力有一轮，采集元数据未记录固件哈希或负载，比较以实机配置未变为前提。
 
 新曲线源文件为 历史运行时生成的五段轨迹，生成脚本为
-`ega-arm-validation-curve`。会话中的 `session.json` 保存轨迹与模型 SHA256；
+`arm-id-validation-curve`。会话中的 `session.json` 保存轨迹与模型 SHA256；
 逐轴对照原始文件未包含在本仓库。
 中间调参试验 `feedforward_shared_004`～`010` 和误用默认旧轨迹的
 `feedforward_complex_002` 已在工作区整理时清理；它们不参与上述结论。

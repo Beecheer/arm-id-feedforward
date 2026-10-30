@@ -10,9 +10,9 @@ import unittest
 
 import numpy as np
 
-from ega_arm_host import arm_collect
-from ega_arm_host import arm_host
-from ega_arm_host.arm_calibration import load_calibration
+from arm_id_feedforward import arm_collect
+from arm_id_feedforward import arm_host
+from arm_id_feedforward.arm_calibration import load_calibration
 
 
 class CalibrationTests(unittest.TestCase):

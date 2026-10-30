@@ -9,9 +9,9 @@ from unittest.mock import patch, MagicMock
 import numpy as np
 import pinocchio as pin
 
-from ega_arm_host import arm_collect
-from ega_arm_host import arm_dynamics
-from ega_arm_host import arm_excitation
+from arm_id_feedforward import arm_collect
+from arm_id_feedforward import arm_dynamics
+from arm_id_feedforward import arm_excitation
 
 
 class DynamicsTests(unittest.TestCase):
@@ -71,7 +71,7 @@ class DynamicsTests(unittest.TestCase):
     def test_excitation_bounds_do_not_invoke_torque_screen(self):
         basis,_=self.dynamics.reference_basis()
         screen=MagicMock();screen.clear.return_value=True
-        with patch('ega_arm_host.arm_plan.TorqueScreen',side_effect=AssertionError('no torque constraints')):
+        with patch('arm_id_feedforward.arm_plan.TorqueScreen',side_effect=AssertionError('no torque constraints')):
             problem=arm_excitation.ExcitationProblem(self.dynamics,basis,screen,5)
         lower,upper=map(np.array,problem.get_variable_bounds())
         self.assertTrue(np.all(lower.reshape(-1,7)[:,1]>=np.radians(30)-1e-10))
@@ -95,7 +95,7 @@ class DynamicsTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory);capture=root/'train.csv';validation=root/'validation.csv'
             capture.write_text('synthetic_train');validation.write_text('synthetic_validation')
-            with patch('ega_arm_host.arm_dynamics.process_capture',side_effect=lambda p,c:train if p==capture else valid):
+            with patch('arm_id_feedforward.arm_dynamics.process_capture',side_effect=lambda p,c:train if p==capture else valid):
                 report=arm_dynamics.fit_capture(capture,root/'result',validation)
             self.assertTrue(report['independent_validation_available'])
             self.assertLess(max(report['validation']['rmse_nm']),1e-7)

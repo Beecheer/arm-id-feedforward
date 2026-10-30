@@ -1,4 +1,4 @@
-# EGA Arm Host
+# Arm ID + Feedforward
 
 七轴机械臂的上位机工具：离线生成激励轨迹、预览、实机采集、检查采集质量、辨识共享完整动力学参数，以及按目标轨迹发送位置、速度和力矩前馈。仓库只包含上位机代码；无需下位机源码，也不读取下位机的位置环实现。
 
@@ -10,39 +10,39 @@ Python 3.10+，推荐在 Linux 上使用 `uv`：
 
 ```bash
 uv sync --locked --extra identify --extra preview
-uv run --locked --extra identify --extra preview ega-arm-host state --port /dev/ttyACM0
+uv run --locked --extra identify --extra preview arm-id-host state --port /dev/ttyACM0
 ```
 
 也可用 `pip install -e '.[identify,preview]'`。完整流程需要辨识和预览依赖；只运行已保存模型的前馈不需要 FIGAROH/IPOPT。
 
 | 入口 | 功能 |
 |---|---|
-| `ega-arm-workflow` | 第 0 步规划、预览、采集、质量分析及单组完整辨识 |
-| `ega-arm-collect-more` | 三组互补训练与一组验证的补充采集 |
-| `ega-arm-identify-many` | 从两组以上独立记录重新拟合一套共享完整模型 |
-| `ega-arm-feedforward` | 完整动力学或仅重力前馈，预览、确认、执行与分析 |
-| `ega-arm-validation-curve` | 生成新的耦合五次样条验证轨迹 |
-| `ega-arm-host` | 只读状态、手动控制与 USB 记录 |
+| `arm-id-workflow` | 第 0 步规划、预览、采集、质量分析及单组完整辨识 |
+| `arm-id-collect-more` | 三组互补训练与一组验证的补充采集 |
+| `arm-id-identify-many` | 从两组以上独立记录重新拟合一套共享完整模型 |
+| `arm-id-feedforward` | 完整动力学或仅重力前馈，预览、确认、执行与分析 |
+| `arm-id-validation-curve` | 生成新的耦合五次样条验证轨迹 |
+| `arm-id-host` | 只读状态、手动控制与 USB 记录 |
 
 示例：
 
 ```bash
-uv run --locked --extra identify --extra preview ega-arm-workflow --output captures/new_session
-uv run --locked --extra identify --extra preview ega-arm-identify-many \
+uv run --locked --extra identify --extra preview arm-id-workflow --output captures/new_session
+uv run --locked --extra identify --extra preview arm-id-identify-many \
   --train captures/run_1.csv --train captures/run_2.csv \
   --validation captures/held_out.csv --output results/new_fit
-uv run --locked --extra preview ega-arm-feedforward \
+uv run --locked --extra preview arm-id-feedforward \
   --model results/new_fit/shared_full_model.json --speed 1.8 \
   --output captures/feedforward_new
 ```
 
-`ega-arm-feedforward --prepare-only` 只生成并检查执行计划，不连接实机。默认模型和 96 秒验证轨迹随包提供。实机运行需在交互界面逐步确认；轨迹位置、速度和几何约束只在生成或执行前检查，采集过程使用真实反馈位置，不会因跟踪误差或反馈越过规划余量而中断。
+`arm-id-feedforward --prepare-only` 只生成并检查执行计划，不连接实机。默认模型和 96 秒验证轨迹随包提供。实机运行需在交互界面逐步确认；轨迹位置、速度和几何约束只在生成或执行前检查，采集过程使用真实反馈位置，不会因跟踪误差或反馈越过规划余量而中断。
 
 ## 模型、示例与结果
 
-`src/ega_arm_host/models/controller/robot.urdf` 保留原关节轴、坐标变换、限位和惯性字段；外观改为方块，碰撞使用简化凸包 OBJ。原始 STL 不在仓库中。凸包是离线规划代理，预览也只展示运动学；规划通过不代表真实设备无碰撞。
+`src/arm_id_feedforward/models/controller/robot.urdf` 保留原关节轴、坐标变换、限位和惯性字段；外观改为方块，碰撞使用简化凸包 OBJ。原始 STL 不在仓库中。凸包是离线规划代理，预览也只展示运动学；规划通过不代表真实设备无碰撞。
 
-`src/ega_arm_host/models/identified/shared_full_model.json` 保留原 91 个共享辨识系数。由于几何文件改变，模型中的 URDF 文件哈希已更新，同时记录原 URDF 哈希；关节运动学及动力学回归矩阵未改变。`examples/measured_excerpt.csv` 是真实反馈的 12 秒片段，附有元数据，可用来检查输入格式和预处理；完整四组辨识数据没有随代码仓库发布，片段不足以复算共享参数。`results/` 中保留历史分析图与实机对照摘要。
+`src/arm_id_feedforward/models/identified/shared_full_model.json` 保留原 91 个共享辨识系数。由于几何文件改变，模型中的 URDF 文件哈希已更新，同时记录原 URDF 哈希；关节运动学及动力学回归矩阵未改变。`examples/measured_excerpt.csv` 是真实反馈的 12 秒片段，附有元数据，可用来检查输入格式和预处理；完整四组辨识数据没有随代码仓库发布，片段不足以复算共享参数。`results/` 中保留历史分析图与实机对照摘要。
 
 辨识只用设备时间、真实反馈关节位置和反馈力矩。速度、加速度由反馈位置滤波求导；它不需要知道下位机如何跟踪位置。前馈由**目标轨迹**的 `q/dq/ddq` 与冻结共享参数计算；反馈位置只用于采集和事后分析。
 
@@ -66,7 +66,7 @@ uv run --locked --extra preview ega-arm-feedforward \
 3. 模式 1 接收位置目标；模式 3 接收 `q/dq/tau_ff`，把 `tau_ff` 作为上位机计算的完整前馈，不再额外叠加本地重力项。上位机默认以 200 Hz 发送，靠 ACK、`target_seq` 和 `status` 确认模式与数据对应关系。
 4. 模式 2 应只读取状态，不改变当前控制模式；模式 0 可供结束或取消时回到重力拖动。通信超时及输出失能策略由下位机负责，并通过 ACK/状态反馈给上位机。
 
-通信格式由 `src/ega_arm_host/arm_host.py` 实现；下位机可以使用任何内部位置跟踪算法，只要满足以上外部接口。
+通信格式由 `src/arm_id_feedforward/arm_host.py` 实现；下位机可以使用任何内部位置跟踪算法，只要满足以上外部接口。
 
 ## 许可
 

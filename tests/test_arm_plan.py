@@ -7,9 +7,9 @@ import tempfile
 import numpy as np
 import pinocchio as pin
 
-from ega_arm_host import arm_collect
-from ega_arm_host import arm_plan
-from ega_arm_host import arm_sim
+from arm_id_feedforward import arm_collect
+from arm_id_feedforward import arm_plan
+from arm_id_feedforward import arm_sim
 
 
 class PlanTests(unittest.TestCase):

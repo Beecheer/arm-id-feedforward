@@ -27,6 +27,55 @@ wheels = [
 ]
 
 [[package]]
+name = "arm-id-feedforward"
+version = "0.1.0"
+source = { editable = "." }
+dependencies = [
+    { name = "matplotlib", version = "3.10.9", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
+    { name = "matplotlib", version = "3.11.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
+    { name = "numpy", version = "2.4.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.11.*'" },
+    { name = "numpy", version = "2.5.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
+    { name = "pandas", version = "2.3.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
+    { name = "pandas", version = "3.1.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "pin" },
+    { name = "pyserial" },
+    { name = "scipy", version = "1.15.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
+    { name = "scipy", version = "1.17.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.11.*'" },
+    { name = "scipy", version = "1.18.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
+]
+
+[package.optional-dependencies]
+identify = [
+    { name = "cyipopt" },
+    { name = "figaroh" },
+    { name = "ndcurves" },
+]
+preview = [
+    { name = "imageio", version = "2.38.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
+    { name = "imageio", version = "2.38.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "mujoco" },
+    { name = "pillow" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "cyipopt", marker = "extra == 'identify'", specifier = ">=1.7.0" },
+    { name = "figaroh", marker = "extra == 'identify'", specifier = ">=1.0,<2" },
+    { name = "imageio", marker = "extra == 'preview'", specifier = ">=2.35,<3" },
+    { name = "matplotlib", specifier = ">=3.9" },
+    { name = "mujoco", marker = "extra == 'preview'", specifier = ">=3.3,<4" },
+    { name = "ndcurves", marker = "extra == 'identify'", specifier = ">=2.3,<2.4" },
+    { name = "numpy", specifier = ">=2.0" },
+    { name = "pandas", specifier = ">=2.2" },
+    { name = "pillow", marker = "extra == 'preview'", specifier = ">=10,<13" },
+    { name = "pin", specifier = ">=4.1,<4.2" },
+    { name = "pyserial", specifier = ">=3.5,<4" },
+    { name = "scipy", specifier = ">=1.14" },
+]
+provides-extras = ["identify", "preview"]
+
+[[package]]
 name = "asttokens"
 version = "3.0.2"
 source = { registry = "https://pypi.org/simple" }
@@ -729,55 +778,6 @@ sdist = { url = "https://files.pythonhosted.org/packages/39/a4/5180d9afc57e8fca0
 wheels = [
     { url = "https://files.pythonhosted.org/packages/32/91/30151a39f7570f448ed84529390628a651d7f27c87d73c9b887f8189695e/docutils-0.23-py3-none-any.whl", hash = "sha256:25d013af9bf23bc1c7b2b093dff4208166c53a94786c9e447808335ef1185fea", size = 634701, upload-time = "2026-05-27T17:40:58.442Z" },
 ]
-
-[[package]]
-name = "ega-arm-host"
-version = "0.1.0"
-source = { editable = "." }
-dependencies = [
-    { name = "matplotlib", version = "3.10.9", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "matplotlib", version = "3.11.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "numpy", version = "2.4.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.11.*'" },
-    { name = "numpy", version = "2.5.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
-    { name = "pandas", version = "2.3.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "pandas", version = "3.1.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "pin" },
-    { name = "pyserial" },
-    { name = "scipy", version = "1.15.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "scipy", version = "1.17.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.11.*'" },
-    { name = "scipy", version = "1.18.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
-]
-
-[package.optional-dependencies]
-identify = [
-    { name = "cyipopt" },
-    { name = "figaroh" },
-    { name = "ndcurves" },
-]
-preview = [
-    { name = "imageio", version = "2.38.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "imageio", version = "2.38.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "mujoco" },
-    { name = "pillow" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "cyipopt", marker = "extra == 'identify'", specifier = ">=1.7.0" },
-    { name = "figaroh", marker = "extra == 'identify'", specifier = ">=1.0,<2" },
-    { name = "imageio", marker = "extra == 'preview'", specifier = ">=2.35,<3" },
-    { name = "matplotlib", specifier = ">=3.9" },
-    { name = "mujoco", marker = "extra == 'preview'", specifier = ">=3.3,<4" },
-    { name = "ndcurves", marker = "extra == 'identify'", specifier = ">=2.3,<2.4" },
-    { name = "numpy", specifier = ">=2.0" },
-    { name = "pandas", specifier = ">=2.2" },
-    { name = "pillow", marker = "extra == 'preview'", specifier = ">=10,<13" },
-    { name = "pin", specifier = ">=4.1,<4.2" },
-    { name = "pyserial", specifier = ">=3.5,<4" },
-    { name = "scipy", specifier = ">=1.14" },
-]
-provides-extras = ["identify", "preview"]
 
 [[package]]
 name = "eigenpy"

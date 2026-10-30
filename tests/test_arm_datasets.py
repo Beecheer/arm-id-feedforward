@@ -4,7 +4,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from ega_arm_host.arm_datasets import flat_recording, resolve_provenance, sha256
+from arm_id_feedforward.arm_datasets import flat_recording, resolve_provenance, sha256
 
 
 class DatasetTests(unittest.TestCase):

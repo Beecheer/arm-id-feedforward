@@ -9,10 +9,10 @@
 同一文件内的目标位置不参与回归。质量提示与辨识结果分别保存，质量提示本身
 不会删除原始记录。
 
-`ega-arm-identify-many` 接受至少两个独立训练 CSV。岭系数只通过训练文件之间的
+`arm-id-identify-many` 接受至少两个独立训练 CSV。岭系数只通过训练文件之间的
 整组留出选择，然后用全部训练记录拟合一套 91 维共享参数。若指定验证文件，
 它只在参数冻结后评估。输出的 `shared_full_model.json` 可直接传给
-`ega-arm-feedforward --model`。
+`arm-id-feedforward --model`。
 
 仓库内的 `examples/measured_excerpt.csv` 是 12 秒真实反馈片段，可用于检查
 解析与预处理。它不包含完整轨迹覆盖，不应当作完整参数辨识训练集。

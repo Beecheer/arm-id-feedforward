@@ -1,4 +1,4 @@
-EGA Arm Host
+Arm ID + Feedforward
 Copyright 2026 EGA Forge contributors
 
 This release contains host-side code, a kinematic model with box visual and convex collision proxy

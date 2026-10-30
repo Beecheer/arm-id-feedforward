@@ -167,7 +167,7 @@ def write_report(output, manifest):
         '保持现有 J2/J4 收紧限位，不设力矩约束。实际覆盖以后续反馈位置复核为准。',
         '采集时沿用位控，不因位置跟踪误差或反馈越界新增中断。', '',
         '在独立上位机仓库中运行：', '```bash',
-        f'uv run ega-arm-collect-more collect --output captures/{output.name}', '```', '',
+        f'uv run arm-id-collect-more collect --output captures/{output.name}', '```', '',
         '每组分别预览、输入执行确认、采集和质量分析，完成后可续采。',
         '此入口不辨识。合并旧、新训练数据，冻结候选模型后再评估新验证力矩；不改固件。', '']
     (output/'report.md').write_text('\n'.join(lines))

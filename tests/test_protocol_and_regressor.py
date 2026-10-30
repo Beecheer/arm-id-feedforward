@@ -6,8 +6,8 @@ from unittest.mock import MagicMock, patch
 
 import numpy as np
 
-from ega_arm_host import arm_host
-from ega_arm_host.regressor import DynamicRegressor
+from arm_id_feedforward import arm_host
+from arm_id_feedforward.regressor import DynamicRegressor
 
 
 MODE3_FRAME = bytes.fromhex(
@@ -52,7 +52,7 @@ class ProtocolTests(unittest.TestCase):
 class RegressorTests(unittest.TestCase):
     def test_host_control_matches_figaroh_columns(self):
         try:
-            from ega_arm_host.arm_dynamics import DynamicModel
+            from arm_id_feedforward.arm_dynamics import DynamicModel
         except ImportError:
             self.skipTest("identify extra is not installed")
         q = np.asarray([[0.2, 1.0, 0.1, -0.8, 0.1, 0.3, -0.2],

@@ -10,12 +10,12 @@ import numpy as np
 import pandas as pd
 import pinocchio as pin
 
-from ega_arm_host import arm_collect
-from ega_arm_host import arm_dynamics
-from ega_arm_host import arm_excitation
-from ega_arm_host import arm_feedforward as ff
-from ega_arm_host import arm_host
-from ega_arm_host import arm_plan
+from arm_id_feedforward import arm_collect
+from arm_id_feedforward import arm_dynamics
+from arm_id_feedforward import arm_excitation
+from arm_id_feedforward import arm_feedforward as ff
+from arm_id_feedforward import arm_host
+from arm_id_feedforward import arm_plan
 
 
 class FakeClient:

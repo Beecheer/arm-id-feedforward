@@ -6,8 +6,8 @@ import tempfile
 import unittest
 from unittest.mock import MagicMock, patch
 
-from ega_arm_host import arm_host
-from ega_arm_host.arm_workflow import ProgressLog
+from arm_id_feedforward import arm_host
+from arm_id_feedforward.arm_workflow import ProgressLog
 
 
 class StateRetryTests(unittest.TestCase):

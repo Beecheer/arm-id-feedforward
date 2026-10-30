@@ -3,7 +3,7 @@ requires = ["setuptools>=69"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "ega-arm-host"
+name = "arm-id-feedforward"
 version = "0.1.0"
 description = "Host-side trajectory design, identification and inverse-dynamics feedforward for the EGA seven-axis arm"
 readme = "README.md"
@@ -23,19 +23,19 @@ identify = ["figaroh>=1.0,<2", "cyipopt>=1.7.0", "ndcurves>=2.3,<2.4"]
 preview = ["mujoco>=3.3,<4", "imageio>=2.35,<3", "pillow>=10,<13"]
 
 [project.scripts]
-ega-arm-host = "ega_arm_host.arm_host:main"
-ega-arm-workflow = "ega_arm_host.arm_workflow:main"
-ega-arm-feedforward = "ega_arm_host.arm_feedforward:main"
-ega-arm-plan = "ega_arm_host.arm_plan:main"
-ega-arm-preview = "ega_arm_host.arm_sim:main"
-ega-arm-collect = "ega_arm_host.arm_collect:main"
-ega-arm-collect-more = "ega_arm_host.arm_collect_more:main"
-ega-arm-validation-curve = "ega_arm_host.arm_validation_curve:main"
-ega-arm-identify = "ega_arm_host.cli:identify"
-ega-arm-identify-many = "ega_arm_host.identify_many:main"
+arm-id-host = "arm_id_feedforward.arm_host:main"
+arm-id-workflow = "arm_id_feedforward.arm_workflow:main"
+arm-id-feedforward = "arm_id_feedforward.arm_feedforward:main"
+arm-id-plan = "arm_id_feedforward.arm_plan:main"
+arm-id-preview = "arm_id_feedforward.arm_sim:main"
+arm-id-collect = "arm_id_feedforward.arm_collect:main"
+arm-id-collect-more = "arm_id_feedforward.arm_collect_more:main"
+arm-id-validation-curve = "arm_id_feedforward.arm_validation_curve:main"
+arm-id-identify = "arm_id_feedforward.cli:identify"
+arm-id-identify-many = "arm_id_feedforward.identify_many:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.setuptools.package-data]
-ega_arm_host = ["models/controller/*.json", "models/controller/*.urdf", "models/controller/*.xml", "models/controller/*.csv", "models/controller/convex/*.obj", "models/identified/*.json"]
+arm_id_feedforward = ["models/controller/*.json", "models/controller/*.urdf", "models/controller/*.xml", "models/controller/*.csv", "models/controller/convex/*.obj", "models/identified/*.json"]
