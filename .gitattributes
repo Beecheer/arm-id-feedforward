@@ -1,0 +1,5 @@
+*.csv text eol=lf
+*.json text eol=lf
+*.urdf text eol=lf
+*.obj text eol=lf
+*.xml text eol=lf

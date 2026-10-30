@@ -1,0 +1,8 @@
+{
+  "kind": "arm_measured_excerpt",
+  "version": 1,
+  "urdf_sha256": "f9411501f9d879d97e791e417d2591698600d203ee1e6ea1d1d75066c69563ab",
+  "transition_duration_s": 0.0,
+  "source_capture_sha256": "06505e70369f90564b8e9479270aa82026adb05241600ca547a808ed0851a77b",
+  "scope": "12 s excerpt for file-format and preprocessing examples; not enough to reproduce the published shared-model fit"
+}

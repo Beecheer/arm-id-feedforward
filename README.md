@@ -1,0 +1,73 @@
+# EGA Arm Host
+
+七轴机械臂的上位机工具：离线生成激励轨迹、预览、实机采集、检查采集质量、辨识共享完整动力学参数，以及按目标轨迹发送位置、速度和力矩前馈。仓库只包含上位机代码；无需下位机源码，也不读取下位机的位置环实现。
+
+当前版本针对随仓库提供的 EGA 七轴关节坐标与 USB 协议 v2。它不是通用机械臂驱动。默认共享参数来自一次四组采集的实机辨识；下位机控制增益仍由下位机决定。
+
+## 安装与入口
+
+Python 3.10+，推荐在 Linux 上使用 `uv`：
+
+```bash
+uv sync --locked --extra identify --extra preview
+uv run --locked --extra identify --extra preview ega-arm-host state --port /dev/ttyACM0
+```
+
+也可用 `pip install -e '.[identify,preview]'`。完整流程需要辨识和预览依赖；只运行已保存模型的前馈不需要 FIGAROH/IPOPT。
+
+| 入口 | 功能 |
+|---|---|
+| `ega-arm-workflow` | 第 0 步规划、预览、采集、质量分析及单组完整辨识 |
+| `ega-arm-collect-more` | 三组互补训练与一组验证的补充采集 |
+| `ega-arm-identify-many` | 从两组以上独立记录重新拟合一套共享完整模型 |
+| `ega-arm-feedforward` | 完整动力学或仅重力前馈，预览、确认、执行与分析 |
+| `ega-arm-validation-curve` | 生成新的耦合五次样条验证轨迹 |
+| `ega-arm-host` | 只读状态、手动控制与 USB 记录 |
+
+示例：
+
+```bash
+uv run --locked --extra identify --extra preview ega-arm-workflow --output captures/new_session
+uv run --locked --extra identify --extra preview ega-arm-identify-many \
+  --train captures/run_1.csv --train captures/run_2.csv \
+  --validation captures/held_out.csv --output results/new_fit
+uv run --locked --extra preview ega-arm-feedforward \
+  --model results/new_fit/shared_full_model.json --speed 1.8 \
+  --output captures/feedforward_new
+```
+
+`ega-arm-feedforward --prepare-only` 只生成并检查执行计划，不连接实机。默认模型和 96 秒验证轨迹随包提供。实机运行需在交互界面逐步确认；轨迹位置、速度和几何约束只在生成或执行前检查，采集过程使用真实反馈位置，不会因跟踪误差或反馈越过规划余量而中断。
+
+## 模型、示例与结果
+
+`src/ega_arm_host/models/controller/robot.urdf` 保留原关节轴、坐标变换、限位和惯性字段；外观改为方块，碰撞使用简化凸包 OBJ。原始 STL 不在仓库中。凸包是离线规划代理，预览也只展示运动学；规划通过不代表真实设备无碰撞。
+
+`src/ega_arm_host/models/identified/shared_full_model.json` 保留原 91 个共享辨识系数。由于几何文件改变，模型中的 URDF 文件哈希已更新，同时记录原 URDF 哈希；关节运动学及动力学回归矩阵未改变。`examples/measured_excerpt.csv` 是真实反馈的 12 秒片段，附有元数据，可用来检查输入格式和预处理；完整四组辨识数据没有随代码仓库发布，片段不足以复算共享参数。`results/` 中保留历史分析图与实机对照摘要。
+
+辨识只用设备时间、真实反馈关节位置和反馈力矩。速度、加速度由反馈位置滤波求导；它不需要知道下位机如何跟踪位置。前馈由**目标轨迹**的 `q/dq/ddq` 与冻结共享参数计算；反馈位置只用于采集和事后分析。
+
+## 下位机通信接口
+
+上位机通过 USB CDC 收发二进制帧。帧结构为 `55 53 | type:u8 | link_seq:u8 | payload_len:u8 | payload | crc16:u16-le`。CRC 初值 `0xffff`，反射多项式 `0x8408`，覆盖 `type` 至 `payload`，结果以小端发送。命令帧 `type=1`，反馈帧 `type=2`；多字节整数及 `float32` 均为小端。
+
+命令 payload 版本为 2：
+
+| 模式 | 长度 | payload |
+|---|---:|---|
+| 0 重力拖动、1 位置采集、2 只读状态 | 34 B | `version:u8, mode:u8, command_seq:u32, q[7]:float32` |
+| 3 逆动力学前馈 | 90 B | `version:u8, mode:u8, command_seq:u32, q[7], dq[7], tau_ff[7]:float32` |
+
+反馈 payload 有两种：8 B ACK 为 `version:u8, kind=1:u8, command_seq:u32, active_mode:u8, result:u8`；104 B 样本为 `version:u8, kind=2:u8, sample_seq:u32, target_seq:u32, device_time_us:u64, status:u16, q[7], dq[7], tau[7]:float32`。`status` 的 bit 0～4 依次表示反馈有效、采集模式、目标有效、命令已入队、逆动力学模式。`result=0` 表示接受；1～8 依次表示无效模式、无效位置、位置超限、电机离线、旧序号、命令过期、命令超时、无效前馈。
+
+下位机需要实现以下行为：
+
+1. 按上述格式解析命令，返回匹配 `command_seq` 的 ACK，持续发送带递增设备时间和样本序号的反馈。
+2. 关节数组顺序固定为 J1～J7。命令位置单位 rad、速度单位 rad/s、力矩及反馈力矩单位 N·m；命令和反馈使用同一关节方向与零位。电机方向、零位、MIT 编码和 PD 增益由下位机自行处理。
+3. 模式 1 接收位置目标；模式 3 接收 `q/dq/tau_ff`，把 `tau_ff` 作为上位机计算的完整前馈，不再额外叠加本地重力项。上位机默认以 200 Hz 发送，靠 ACK、`target_seq` 和 `status` 确认模式与数据对应关系。
+4. 模式 2 应只读取状态，不改变当前控制模式；模式 0 可供结束或取消时回到重力拖动。通信超时及输出失能策略由下位机负责，并通过 ACK/状态反馈给上位机。
+
+通信格式由 `src/ega_arm_host/arm_host.py` 实现；下位机可以使用任何内部位置跟踪算法，只要满足以上外部接口。
+
+## 许可
+
+代码、随仓库模型代理、示例片段、文档和图片采用 Apache-2.0；详见 [LICENSE](LICENSE) 与 [NOTICE](NOTICE)。原始 CAD STL 和下位机固件源码不包含在本仓库。

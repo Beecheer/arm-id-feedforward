@@ -1,0 +1,6 @@
+EGA Arm Host
+Copyright 2026 EGA Forge contributors
+
+This release contains host-side code, a kinematic model with box visual and convex collision proxy
+geometry, an identified parameter snapshot, example measurements and figures.
+It contains no lower-controller firmware source or original STL meshes.

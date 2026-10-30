@@ -1,0 +1,40 @@
+{
+  "kind": "ega_arm_host_profile",
+  "version": 1,
+  "joint_count": 7,
+  "motor_models": [
+    "dm3507",
+    "dm4310p",
+    "dm4310",
+    "dm4310",
+    "dm3507",
+    "dm3507",
+    "dm3507"
+  ],
+  "rated_torque_nm": [
+    0.8,
+    3.5,
+    3,
+    3,
+    0.8,
+    0.8,
+    0.8
+  ],
+  "rated_usage_fraction": 0.8,
+  "rating_sources": {
+    "dm3507": "https://www.dmbot.cn/index.php?c=show&id=118",
+    "dm4310": "https://www.dmbot.cn/index.php?c=show&id=84",
+    "dm4310p": "https://www.dmbot.cn/index.php?c=category&id=22"
+  },
+  "reference_gravity_model": "reference_gravity.json",
+  "geometry": "axis-aligned box visuals and convex hull OBJ collision proxies; joint kinematics unchanged; physical validation remains necessary",
+  "planning_gravity_scale": [
+    1.0,
+    2.4,
+    1.9,
+    3.6,
+    3.5,
+    3.5,
+    1.0
+  ]
+}

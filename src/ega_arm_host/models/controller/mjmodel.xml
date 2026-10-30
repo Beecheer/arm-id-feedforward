@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Visual proxy only; no STL meshes or calibrated dynamics. -->
+<mujoco model="arm_7dof">
+  <compiler angle="radian" autolimits="true" />
+  <option gravity="0 0 -9.81" />
+  <visual>
+    <quality shadowsize="0" />
+  </visual>
+  <asset>
+    <texture name="grid" type="2d" builtin="checker" rgb1="0.7 0.8 1.0" rgb2="1.0 1.0 1.0" width="512" height="512" />
+    <material name="grid" texture="grid" texrepeat="8 8" />
+  </asset>
+  <default>
+    <geom type="box" rgba="0.85 0.85 0.85 1" />
+    <joint type="hinge" limited="true" damping="0.1" armature="0.01" />
+    <motor ctrllimited="true" ctrlrange="-10 10" />
+  </default>
+  <worldbody>
+    <geom name="floor" type="plane" size="1 1 0.01" material="grid" contype="3" conaffinity="3" />
+    <light name="top" pos="0 0 2" dir="0 0 -1" diffuse="0.8 0.8 0.8" />
+    <light name="front" pos="1.5 0 1" diffuse="0.6 0.6 0.6" />
+    <light name="back" pos="-1.5 0 1" diffuse="0.4 0.4 0.4" />
+    <body name="base_link" pos="0 0 0">
+      <inertial pos="0.029953 0.029941 0.02952" mass="0.081607" diaginertia="2.1252e-05 2.1283e-05 3.2991e-05" />
+      <geom rgba="0.6 0.6 0.6 1" contype="1" conaffinity="1" type="box" size="0.035 0.035 0.0235" pos="0.03 0.03 0.0235" />
+      <body name="Link_1" pos="0.03 0.03 0.0475">
+        <inertial pos="-2.9033e-06 -0.00059967 0.03596" quat="0.691704 -0.148393 0.149762 0.690722" mass="0.17103" diaginertia="8.55338e-05 7.1554e-05 6.81122e-05" />
+        <joint name="Joint_01" axis="0 0 -1" range="-1.57 1.57" />
+        <geom rgba="0.4 0.6 1.0 1" contype="2" conaffinity="2" type="box" size="0.03 0.031275 0.0395" pos="0 0.002225 0.035" />
+        <body name="Link_2" pos="0 -0.03055 0.0445">
+          <inertial pos="-0.058145 0.02764 1.5343e-05" quat="0.596564 0.553594 0.432845 0.387674" mass="0.19398" diaginertia="0.000165844 0.000162062 9.05717e-05" />
+          <joint name="Joint_12" axis="0 1 0" range="0 3.1416" />
+          <geom rgba="0.4 0.8 0.4 1" contype="1" conaffinity="1" type="box" size="0.059 0.039525 0.03" pos="-0.036 0.029525 0" />
+          <body name="Link_3" pos="-0.0935 0.02925 0">
+            <inertial pos="-0.060244 0.0078654 -1.8538e-05" quat="0.591842 0.584132 0.395067 0.39043" mass="0.18531" diaginertia="0.000159507 0.00014721 7.95499e-05" />
+            <joint name="Joint_23" axis="1 0 0" range="-1.5708 1.5708" />
+            <geom rgba="0.95 0.5 0.5 1" contype="2" conaffinity="2" type="box" size="0.05741783 0.04 0.03" pos="-0.05241783 0.005000001 0" />
+            <body name="Link_4" pos="-0.08 -0.02555 0">
+              <inertial pos="0.021744 0.021299 0.051227" quat="0.579815 -0.315128 0.00302939 0.751332" mass="0.19649" diaginertia="0.000178811 0.00015443 0.000100539" />
+              <joint name="Joint_34" axis="0 1 0" range="-3.1416 0" />
+              <geom rgba="0.95 0.75 0.3 1" contype="1" conaffinity="1" type="box" size="0.06145 0.035 0.05991783" pos="0.03145 0.0255 0.03008217" />
+              <body name="Link_5" pos="0.0929 0.0255 0.065">
+                <inertial pos="0.036396 -0.0040005 -4.1957e-05" quat="0.582575 0.579452 0.403207 0.402822" mass="0.088959" diaginertia="3.81601e-05 3.19231e-05 2.18458e-05" />
+                <joint name="Joint_45" axis="1 0 0" range="-3.1416 3.1416" />
+                <geom rgba="0.6 0.5 0.85 1" contype="2" conaffinity="2" type="box" size="0.03494668 0.025 0.025" pos="0.03494668 0 0" />
+                <body name="Link_6" pos="0.045 0.0199 0">
+                  <inertial pos="0.048768 -0.017783 -4.337e-05" quat="0.576733 0.581986 0.401042 0.409679" mass="0.086021" diaginertia="4.79171e-05 4.55635e-05 2.56113e-05" />
+                  <joint name="Joint_56" axis="0 1 0" range="-2.0944 2.0944" />
+                  <geom rgba="0.9 0.6 0.1 1" contype="1" conaffinity="1" type="box" size="0.049 0.0275 0.025" pos="0.026 -0.0225 0" />
+                  <body name="Link_7" pos="0.0725 -0.025 0">
+                    <inertial pos="0.0325 -0.0002483 -0.0002483" quat="0.653281 0.270598 0.653281 0.270598" mass="0.0050343" diaginertia="1.54898e-06 1.54022e-06 6.8558e-08" />
+                    <joint name="Joint_67" axis="1 0 0" range="-3.1416 3.1416" />
+                    <geom rgba="0.79 0.82 0.93 1" contype="2" conaffinity="2" type="box" size="0.03 0.004984281 0.004984281" pos="0.0325 -1.571933e-05 -1.571933e-05" />
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+  <actuator>
+    <motor name="A_Joint_01" joint="Joint_01" />
+    <motor name="A_Joint_12" joint="Joint_12" />
+    <motor name="A_Joint_23" joint="Joint_23" />
+    <motor name="A_Joint_34" joint="Joint_34" />
+    <motor name="A_Joint_45" joint="Joint_45" />
+    <motor name="A_Joint_56" joint="Joint_56" />
+    <motor name="A_Joint_67" joint="Joint_67" />
+  </actuator>
+</mujoco>

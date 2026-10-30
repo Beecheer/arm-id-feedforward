@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Joint kinematics and inertials retained; box visuals and convex collision proxies. -->
+<robot name="robot">
+  <link name="base_link">
+    <inertial>
+      <origin xyz="0.029953 0.029941 0.02952" rpy="0 0 0" />
+      <mass value="0.081607" />
+      <inertia ixx="2.1252E-05" ixy="3.7796E-08" ixz="-5.6793E-09" iyy="2.1283E-05" iyz="-5.6183E-09" izz="3.2991E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0.03 0.03 0.0235" rpy="0 0 0" />
+      <geometry>
+        <box size="0.07 0.07 0.047" />
+      </geometry>
+      <material name="">
+        <color rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.03 0.03 0.0235" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="./convex/base_link.obj" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="Link_1">
+    <inertial>
+      <origin xyz="-2.9033E-06 -0.00059967 0.03596" rpy="0 0 0" />
+      <mass value="0.17103" />
+      <inertia ixx="7.1554E-05" ixy="8.9982E-09" ixz="-1.2326E-08" iyy="8.2574E-05" iyz="-6.5424E-06" izz="7.1072E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0.002225 0.035" rpy="0 0 0" />
+      <geometry>
+        <box size="0.06 0.06255 0.079" />
+      </geometry>
+      <material name="">
+        <color rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0.002225 0.035" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="./convex/Link_1.obj" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Joint_01" type="revolute">
+    <origin xyz="0.03 0.03 0.0475" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="Link_1" />
+    <axis xyz="0 0 -1" />
+    <limit lower="-1.57" upper="1.57" effort="10" velocity="10" />
+  </joint>
+  <link name="Link_2">
+    <inertial>
+      <origin xyz="-0.058145 0.02764 1.5343E-05" rpy="0 0 0" />
+      <mass value="0.19398" />
+      <inertia ixx="9.8528E-05" ixy="2.3122E-05" ixz="-9.4261E-07" iyy="0.00015787" iyz="-2.3582E-08" izz="0.00016208" />
+    </inertial>
+    <visual>
+      <origin xyz="-0.036 0.029525 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.118 0.07905 0.06" />
+      </geometry>
+      <material name="">
+        <color rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.036 0.029525 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="./convex/Link_2.obj" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Joint_12" type="revolute">
+    <origin xyz="0 -0.03055 0.0445" rpy="0 0 0" />
+    <parent link="Link_1" />
+    <child link="Link_2" />
+    <axis xyz="0 1 0" />
+    <limit lower="0" upper="3.1416" effort="10" velocity="10" />
+  </joint>
+  <link name="Link_3">
+    <inertial>
+      <origin xyz="-0.060244 0.0078654 -1.8538E-05" rpy="0 0 0" />
+      <mass value="0.18531" />
+      <inertia ixx="9.1277E-05" ixy="2.8284E-05" ixz="-3.9324E-07" iyy="0.00014778" iyz="9.8189E-09" izz="0.00014721" />
+    </inertial>
+    <visual>
+      <origin xyz="-0.05241783 0.005000001 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.1148357 0.08 0.06" />
+      </geometry>
+      <material name="">
+        <color rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.05241783 0.005000001 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="./convex/Link_3.obj" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Joint_23" type="revolute">
+    <origin xyz="-0.0935 0.02925 0" rpy="0 0 0" />
+    <parent link="Link_2" />
+    <child link="Link_3" />
+    <axis xyz="1 0 0" />
+    <limit lower="-1.5708" upper="1.5708" effort="10" velocity="10" />
+  </joint>
+  <link name="Link_4">
+    <inertial>
+      <origin xyz="0.021744 0.021299 0.051227" rpy="0 0 0" />
+      <mass value="0.19649" />
+      <inertia ixx="0.00014293" ixy="6.6368E-06" ixz="2.1799E-05" iyy="0.00016548" iyz="-2.609E-05" izz="0.00012537" />
+    </inertial>
+    <visual>
+      <origin xyz="0.03145 0.0255 0.03008217" rpy="0 0 0" />
+      <geometry>
+        <box size="0.1229 0.07 0.1198357" />
+      </geometry>
+      <material name="">
+        <color rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.03145 0.0255 0.03008217" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="./convex/Link_4.obj" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Joint_34" type="revolute">
+    <origin xyz="-0.08 -0.02555 0" rpy="0 0 0" />
+    <parent link="Link_3" />
+    <child link="Link_4" />
+    <axis xyz="0 1 0" />
+    <limit lower="-3.1416" upper="0" effort="10" velocity="10" />
+  </joint>
+  <link name="Link_5">
+    <inertial>
+      <origin xyz="0.036396 -0.0040005 -4.1957E-05" rpy="0 0 0" />
+      <mass value="0.088959" />
+      <inertia ixx="2.3848E-05" ixy="5.3529E-06" ixz="-3.7798E-08" iyy="3.6158E-05" iyz="-5.6005E-09" izz="3.1923E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0.03494668 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.06989335 0.05 0.05" />
+      </geometry>
+      <material name="">
+        <color rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.03494668 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="./convex/Link_5.obj" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Joint_45" type="revolute">
+    <origin xyz="0.0929 0.0255 0.065" rpy="0 0 0" />
+    <parent link="Link_4" />
+    <child link="Link_5" />
+    <axis xyz="1 0 0" />
+    <limit lower="-3.1416" upper="3.1416" effort="10" velocity="10" />
+  </joint>
+  <link name="Link_6">
+    <inertial>
+      <origin xyz="0.048768 -0.017783 -4.337E-05" rpy="0 0 0" />
+      <mass value="0.086021" />
+      <inertia ixx="2.8231E-05" ixy="7.1812E-06" ixz="-5.652E-09" iyy="4.5297E-05" iyz="3.7802E-08" izz="4.5564E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0.026 -0.0225 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.098 0.055 0.05" />
+      </geometry>
+      <material name="">
+        <color rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.026 -0.0225 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="./convex/Link_6.obj" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Joint_56" type="revolute">
+    <origin xyz="0.045 0.0199 0" rpy="0 0 0" />
+    <parent link="Link_5" />
+    <child link="Link_6" />
+    <axis xyz="0 1 0" />
+    <limit lower="-2.0944" upper="2.0944" effort="10" velocity="10" />
+  </joint>
+  <link name="Link_7">
+    <inertial>
+      <origin xyz="0.0325 -0.0002483 -0.0002483" rpy="0 0 0" />
+      <mass value="0.0050343" />
+      <inertia ixx="6.8558E-08" ixy="-1.2772E-21" ixz="3.9024E-22" iyy="1.5446E-06" iyz="-4.3771E-09" izz="1.5446E-06" />
+    </inertial>
+    <visual>
+      <origin xyz="0.0325 -1.571933e-05 -1.571933e-05" rpy="0 0 0" />
+      <geometry>
+        <box size="0.06 0.009968562 0.009968561" />
+      </geometry>
+      <material name="">
+        <color rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.0325 -1.571933e-05 -1.571933e-05" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="./convex/Link_7.obj" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Joint_67" type="revolute">
+    <origin xyz="0.0725 -0.025 0" rpy="0 0 0" />
+    <parent link="Link_6" />
+    <child link="Link_7" />
+    <axis xyz="1 0 0" />
+    <limit lower="-3.1416" upper="3.1416" effort="10" velocity="10" />
+  </joint>
+</robot>
