@@ -50,11 +50,9 @@ uv run --locked --extra preview arm-id-feedforward \
 
 ![完整动力学与仅重力前馈的逐轴位置误差对比](docs/images/full_vs_gravity.png)
 
-跟踪曲线示例：
+以下是 `feedforward_complex_003` 的七轴跟踪记录（完整动力学前馈，3 倍速）。每行对应一个关节：左侧叠加目标位置和反馈位置，右侧为目标位置减反馈位置的误差；包含入场段和五段耦合运动。
 
-![五段耦合轨迹跟踪效果](docs/images/complex_tracking.png)
-
-![J3 位置跟踪误差](docs/images/complex_j3_error.png)
+![七轴目标位置、反馈位置与位置误差](docs/images/all_axis_tracking_error.png)
 
 `results/` 保留历史辨识图与实机对照摘要。
 
