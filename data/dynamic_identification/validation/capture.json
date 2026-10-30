@@ -1,0 +1,37 @@
+{
+  "stage": "dynamic",
+  "capture_mode": "position_control",
+  "torque_source": "raw_feedback",
+  "capture_csv": "capture.csv",
+  "trajectory_csv": "plan.csv",
+  "trajectory_sha256": "312969b6dc49c9609c336c4448fdf318fcc4e3d6ea3361c67535b1c1a5cd1d52",
+  "start_position_rad": [
+    -0.046349525451660156,
+    0.9397649765014648,
+    -0.045205116271972656,
+    -0.7810707092285156,
+    0.052071571350097656,
+    0.3114748001098633,
+    -0.035286903381347656
+  ],
+  "command_start_position_rad": [
+    -0.046349525451660156,
+    0.9397649765014648,
+    -0.045205116271972656,
+    -0.7810707092285156,
+    0.052071571350097656,
+    0.3114748001098633,
+    -0.035286903381347656
+  ],
+  "command_events": {
+    "position_rejections": 0,
+    "command_timeouts": 1
+  },
+  "command_rate_hz": 200.0,
+  "transition_duration_s": 24.0,
+  "urdf_sha256": "f9411501f9d879d97e791e417d2591698600d203ee1e6ea1d1d75066c69563ab",
+  "limit_margin_rad": 0.0,
+  "maximum_velocity_rad_s": 0.25,
+  "maximum_acceleration_rad_s2": 0.5,
+  "original_urdf_sha256": "29b22ac6409c97aca83d7e914d2f7a2f1c89bf45bf86cc0b7d654917f6f59925"
+}

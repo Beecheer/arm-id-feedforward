@@ -42,7 +42,21 @@ uv run --locked --extra preview arm-id-feedforward \
 
 `src/arm_id_feedforward/models/controller/robot.urdf` 保留原关节轴、坐标变换、限位和惯性字段；外观改为方块，碰撞使用简化凸包 OBJ。原始 STL 不在仓库中。凸包是离线规划代理，预览也只展示运动学；规划通过不代表真实设备无碰撞。
 
-`src/arm_id_feedforward/models/identified/shared_full_model.json` 保留原 91 个共享辨识系数。由于几何文件改变，模型中的 URDF 文件哈希已更新，同时记录原 URDF 哈希；关节运动学及动力学回归矩阵未改变。`examples/measured_excerpt.csv` 是真实反馈的 12 秒片段，附有元数据，可用来检查输入格式和预处理；完整四组辨识数据没有随代码仓库发布，片段不足以复算共享参数。`results/` 中保留历史分析图与实机对照摘要。
+`data/dynamic_identification/` 包含四组动态训练记录及一组独立验证记录，可复算共享完整动力学模型。J3 训练组含一次较长反馈间断，质量报告中保留了提示。数据索引和 SHA256 在 `data/index.json`；详细说明与复算命令见 [`data/README.md`](data/README.md)。`examples/measured_excerpt.csv` 保留为快速解析示例。
+
+## 实机效果
+
+下图来自五段耦合验证曲线的 3 倍速实机测试。完整动力学前馈两次位置 RMSE 分别为 0.235° 和 0.246°；相同模型、轨迹和速度下，仅重力前馈为 0.527°。这是当前这台机械臂和负载下的记录。
+
+![完整动力学与仅重力前馈的逐轴位置误差对比](docs/images/full_vs_gravity.png)
+
+跟踪曲线示例：
+
+![五段耦合轨迹跟踪效果](docs/images/complex_tracking.png)
+
+![J3 位置跟踪误差](docs/images/complex_j3_error.png)
+
+`results/` 保留历史辨识图与实机对照摘要。
 
 辨识只用设备时间、真实反馈关节位置和反馈力矩。速度、加速度由反馈位置滤波求导；它不需要知道下位机如何跟踪位置。前馈由**目标轨迹**的 `q/dq/ddq` 与冻结共享参数计算；反馈位置只用于采集和事后分析。
 

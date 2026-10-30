@@ -1,0 +1,52 @@
+{
+  "kind": "arm_id_feedforward_dataset",
+  "version": 1,
+  "model_urdf_sha256": "f9411501f9d879d97e791e417d2591698600d203ee1e6ea1d1d75066c69563ab",
+  "records": [
+    {
+      "name": "training_01",
+      "role": "training",
+      "path": "data/dynamic_identification/training_01",
+      "capture_sha256": "775779840f1148150e42f3db1dee42ad207b4026ea8533d04e83cd5f0cd1ce1a",
+      "plan_sha256": "209ad8ef378d1be1673d6a48e576ef9d747813b707d0960ba94f63aedef99b7b",
+      "samples": 19150,
+      "quality_passed": true
+    },
+    {
+      "name": "training_02",
+      "role": "training",
+      "path": "data/dynamic_identification/training_02",
+      "capture_sha256": "54c745be85e65c887abc2891e961e72b6313b141e454eaa542c4f2eead193abd",
+      "plan_sha256": "e1be554c401458decf52dd1fbc87155259f1f66be677b63216641a2b2cfb5604",
+      "samples": 24009,
+      "quality_passed": true
+    },
+    {
+      "name": "training_03",
+      "role": "training",
+      "path": "data/dynamic_identification/training_03",
+      "capture_sha256": "9c01e7b0c7790a99e60a9c2e47293b81e2068f9cb4b13c3bfec3db88af5ccb4d",
+      "plan_sha256": "e45bf5344c497a41c6d0814290a32c2cd9878b76fe97987674dc0a1d363a0c61",
+      "samples": 23967,
+      "quality_passed": false
+    },
+    {
+      "name": "training_04",
+      "role": "training",
+      "path": "data/dynamic_identification/training_04",
+      "capture_sha256": "0352423833be353be2fa43488df41a53499e2ac07cc848534c66eb52f873e946",
+      "plan_sha256": "321213c68664e22e59e7b9073cb26f894fac0246ef6a921d1aa7280b3a206947",
+      "samples": 24121,
+      "quality_passed": true
+    },
+    {
+      "name": "validation",
+      "role": "validation",
+      "path": "data/dynamic_identification/validation",
+      "capture_sha256": "282f5889d4d7940b62f36f3230958f3c783b5fb5a2dfc494064dedf5a90ddf2f",
+      "plan_sha256": "312969b6dc49c9609c336c4448fdf318fcc4e3d6ea3361c67535b1c1a5cd1d52",
+      "samples": 24098,
+      "quality_passed": true
+    }
+  ]
+}

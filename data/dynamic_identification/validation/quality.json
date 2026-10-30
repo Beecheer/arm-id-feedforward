@@ -1,0 +1,77 @@
+{
+  "kind": "capture_quality",
+  "stage": "dynamic",
+  "capture": "capture.csv",
+  "capture_sha256": "282f5889d4d7940b62f36f3230958f3c783b5fb5a2dfc494064dedf5a90ddf2f",
+  "sample_count": 24098,
+  "valid_sample_count": 24098,
+  "torque_columns": [
+    "tau1_nm",
+    "tau2_nm",
+    "tau3_nm",
+    "tau4_nm",
+    "tau5_nm",
+    "tau6_nm",
+    "tau7_nm"
+  ],
+  "torque_source": "raw_feedback",
+  "issues": [],
+  "scope": "acquisition_quality_only; no physical parameter fit",
+  "capture_mode": "position_control",
+  "joint_summary": {
+    "position_min_rad": [
+      -0.6231403350830078,
+      0.6574735641479492,
+      -1.3639659881591797,
+      -2.1822309494018555,
+      -1.0347528457641602,
+      -0.9870681762695312,
+      -1.459334373474121
+    ],
+    "position_max_rad": [
+      0.510986328125,
+      2.0262069702148438,
+      1.3197145462036133,
+      -0.7810707092285156,
+      1.3841838836669922,
+      0.9817276000976562,
+      1.4475088119506836
+    ],
+    "velocity_rms_rad_s": [
+      0.12120589289073533,
+      0.10793154926821401,
+      0.11567368186501184,
+      0.1339652589256427,
+      0.22591002043914046,
+      0.1896465280239791,
+      0.261594771432914
+    ],
+    "torque_min_nm": [
+      -0.10866928100585938,
+      -1.7655677795410156,
+      -0.46520137786865234,
+      -1.3980464935302734,
+      -0.17460298538208008,
+      -0.2429790496826172,
+      -0.07936525344848633
+    ],
+    "torque_max_nm": [
+      0.11355304718017578,
+      2.9279613494873047,
+      0.34310150146484375,
+      0.39438343048095703,
+      0.10134315490722656,
+      0.21611738204956055,
+      0.08424901962280273
+    ]
+  },
+  "missing_samples": 0,
+  "loss_fraction": 0.0,
+  "expected_duration_s": 120.0,
+  "device_duration_s": 120.549749,
+  "host_first_sample_s": 0.007973,
+  "host_last_sample_s": 120.011018,
+  "missing_tail_s": 0.0,
+  "duplicate_sample_sequences": 0,
+  "passed": true
+}
